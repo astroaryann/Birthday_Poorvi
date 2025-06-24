@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Poorvi!</title>
+    <style>
+        /* --- FONTS & BASIC STYLES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* --- SPARKLING BACKGROUND --- */
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: sparkle-anim 5s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkle-anim {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        /* --- HEADER --- */
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 6rem;
+            color: #d63384;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: -10px;
+        }
+        
+        /* --- GIFTS SECTION --- */
+        .gifts-section {
+            margin-top: 50px;
+        }
+
+        .gifts-section h2 {
+            font-size: 2rem;
+            color: #d63384;
+            margin-bottom: 30px;
+        }
+
+        .gifts-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .gift-box {
+            width: 150px;
+            height: 150px;
+            background: #ffc107;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .gift-box .message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #e83e8c;
+            color: white;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            font-size: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s, visibility 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .gift-box.unwrapped .message {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .gift-box.unwrapped .emoji {
+            display: none;
+        }
+        
+        /* --- LETTER SECTION --- */
+        .letter-section {
+            margin-top: 60px;
+            text-align: left;
+            padding: 30px;
+            background: #fff0f5;
+            border-radius: 15px;
+            border-left: 5px solid #d63384;
+        }
+        
+        .letter-section h2 {
+            color: #d63384;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin-top: 0;
+        }
+
+        /* --- WISH SECTION --- */
+        .wish-section {
+            margin-top: 50px;
+        }
+
+        #wish-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #wish-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            margin-top: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* --- FOR CONFETTI --- */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sparkle-container"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h1>Happy Birthday, Poorvi!</h1>
+            <p>Wishing you the most amazing day ever!</p>
+        </header>
+
+        <section class="gifts-section">
+            <h2>A few reasons why you're so special...</h2>
+            <p>(Click on the gifts to open them!)</p>
+            <div class="gifts-container">
+                <!-- ✏️ EDIT HERE: Change the text inside the <div class="message"> tags -->
+                <div class="gift-box" onclick="unwrapGift(this)">
+                    <span class="emoji">🎁</span>
+                    <div class="message">Your incredible kindness. You have a heart of gold!</div>
+                </div>
+                <div class="gift-box" onclick="unwrapGift(this)">
+                    <span class="emoji">🎁</span>
+                    <div class="message">Your amazing sense of humor. You always make me laugh!</div>
+                </div>
+                <div class="gift-box" onclick="unwrapGift(this)">
+                    <span class="emoji">🎁</span>
+                    <div class="message">That time we [mention a specific fun memory]. I'll never forget it!</div>
+                </div>
+                <div class="gift-box" onclick="unwrapGift(this)">
+                    <span class="emoji">🎁</span>
+                    <div class="message">You are the most loyal and supportive friend anyone could ask for.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <!-- ✏️ EDIT HERE: Write your personal letter to Poorvi -->
+            <h2>My Dearest Poorvi,</h2>
+            <p>
+                On your special day, I just wanted to take a moment to tell you how much you mean to me. Our friendship is something I treasure more than words can say. From our late-night talks to our craziest adventures, every moment spent with you is a gift.
+            </p>
+            <p>
+                I hope this year brings you all the happiness, success, and love you deserve. May all your dreams take flight and your worries fade away.
+            </p>
+            <p>
+                Thank you for being you. Happy birthday!
+            </p>
+        </section>
+
+        <section class="wish-section">
+            <h2>And now... the grand finale!</h2>
+            <p>Close your eyes, make a big wish, and click the button!</p>
+            <button id="wish-button">Make a Wish! ✨</button>
+        </section>
+        
+        <footer>
+            <!-- ✏️ EDIT HERE: Change "[Your Name]" to your actual name -->
+            <p>With all my love, <br> [Your Name]</p>
+        </footer>
+
+    </div>
+
+    <!-- SCRIPT FOR INTERACTIVITY -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- GIFT UNWRAPPING SCRIPT ---
+        function unwrapGift(giftBox) {
+            giftBox.classList.toggle('unwrapped');
+        }
+
+        // --- BACKGROUND SPARKLES ---
+        const sparkleContainer = document.querySelector('.sparkle-container');
+        for (let i = 0; i < 50; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 5}s`;
+            sparkle.style.animationDuration = `${2 + Math.random() * 3}s`;
+            sparkleContainer.appendChild(sparkle);
+        }
+        
+        // --- CONFETTI SCRIPT ---
+        const wishButton = document.getElementById('wish-button');
+        const myCanvas = document.getElementById('confetti-canvas');
+        const myConfetti = confetti.create(myCanvas, {
+            resize: true,
+            useWorker: true
+        });
+
+        wishButton.addEventListener('click', () => {
+            // A burst from the center
+            myConfetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+
+            // Fireworks effect
+            const duration = 2 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                // launch a few confetti from the left edge
+                myConfetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                // and launch a few from the right edge
+                myConfetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        });
+
+    </script>
+</body>
+</html>
